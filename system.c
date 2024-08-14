@@ -56,7 +56,7 @@ void Load_Accounts(char *file_path)
         }
     }
 
-	Print_accounts();
+	// Print_accounts();
 
     fclose(f);
 }
@@ -103,7 +103,7 @@ bool create_account(Person * new_account)
 {
 	if (new_account == NULL)
 	{
-		fprintf(stderr, "Failed to create account (NULL)\n");
+		fprintf(stderr, BOLD RED "Failed to create account (NULL)\n" RESET);
 		return false;
 	}
 
@@ -115,7 +115,7 @@ bool create_account(Person * new_account)
 			{
 				if(strcmp(Bank_Accounts[i]->name,new_account->name) != 0)
 				{
-					fprintf(stderr , "Cannot Create New Account (%s). Account Already exists with the same Account Number.\n" ,new_account->name);
+					fprintf(stderr ,BOLD RED "Cannot Create New Account (%s). Account Already exists with the same Account Number.\n"RESET ,new_account->name);
 					return false;
 				}
 			}
@@ -137,11 +137,11 @@ bool create_account(Person * new_account)
 	}
 	else if (strcmp(Bank_Accounts[index]->name,new_account->name) == 0)
 	{
-		fprintf(stderr , "Account Already exists with the same name. (%s) collided with (%s)\n",Bank_Accounts[index]->name, new_account->name );
+		fprintf(stderr , BOLD RED "Account Already exists with the same name. (%s) collided with (%s)\n" RESET,Bank_Accounts[index]->name, new_account->name );
 		return false;
 	}
 
-	fprintf(stderr ,"Failed to create Account (%s) for Whatever reasons.\n", new_account->name);
+	fprintf(stderr ,BOLD RED"Failed to create Account (%s) for Whatever reasons.\n" RESET, new_account->name);
 	return false;
 }
 
@@ -172,7 +172,7 @@ bool transfer_money(char * from , char * to , size_t value)
 
 	if(Bank_Accounts[index_from]->balance < value)
 	{
-		printf("Not Enough Funds in Account to Transfer %zu.\n", value);
+		printf(BOLD RED"Not Enough Funds in Account to Transfer %zu.\n" RESET, value);
 		return false;
 	}
 	Bank_Accounts[index_from]->balance -= value;
@@ -190,7 +190,7 @@ size_t check_balance(char *name)
 	size_t index = hash_function(name , (size_t) strlen(name));
 	if(Bank_Accounts[index] == NULL)
 	{
-		fprintf(stderr , "Account Does Not Exist (NULL)\n");
+		fprintf(stderr , BOLD RED "Account Does Not Exist (NULL)\n" RESET);
 		exit(EXIT_FAILURE);
 	}
 	else if (strcmp(name , Bank_Accounts[index]->name) == 0)
@@ -198,7 +198,7 @@ size_t check_balance(char *name)
 		return Bank_Accounts[index]->balance;
 	}
 
-	fprintf(stderr , "Account Not Found\n");
+	fprintf(stderr , BOLD RED"Account Not Found\n" RESET);
 	exit(EXIT_FAILURE);
 }
 
@@ -216,15 +216,15 @@ void Retrieve_Accounts(char *name)
 	size_t index = hash(name , (size_t) strlen(name));
 	if (Bank_Accounts[index] == NULL )
 	{
-		fprintf(stderr , "Account with the name(%s) does Not Exist (NULL)\n", name);
+		fprintf(stderr , BOLD RED"Account with the name(%s) does Not Exist (NULL)\n" RESET, name);
 		return exit(EXIT_FAILURE);
 	}
 
-	printf(" Name: %s\n", Bank_Accounts[index]->name);
-	printf(" Age: %zu\n", Bank_Accounts[index]->age);
-	printf(" Account Number: %zu\n", Bank_Accounts[index]->account_number);
-	printf(" Gender: %s", Bank_Accounts[index]->gender);
-	printf(" Balance: $%.2f\n", (float) Bank_Accounts[index]->balance);
+	printf(BOLD YELLOW" Name: %s\n"RESET, Bank_Accounts[index]->name);
+	printf(BOLD YELLOW" Age: %zu\n"RESET, Bank_Accounts[index]->age);
+	printf(BOLD YELLOW" Account Number: %zu\n"RESET, Bank_Accounts[index]->account_number);
+	printf(BOLD YELLOW" Gender: %s"RESET, Bank_Accounts[index]->gender);
+	printf(BOLD YELLOW" Balance: $%.2f\n"RESET, (float) Bank_Accounts[index]->balance);
 	printf("\n");
 }
 
@@ -232,8 +232,8 @@ void Retrieve_Accounts(char *name)
 void Print_accounts()
 {
 	printf("\n");
-	printf("Start\n");
-	printf("Account(s) Registerd.\n");
+	printf(BOLD YELLOW"Start\n" RESET);
+	printf(BOLD YELLOW"Account(s) Registerd.\n"RESET);
 	printf("\n");
 
 	for (size_t i = 0 ; i < MAX_SIZE; i++)
@@ -249,7 +249,7 @@ void Print_accounts()
 	}
 
 	printf("\n");
-	printf("End\n");
+	printf(BOLD YELLOW"End\n"RESET);
 	printf("\n");
 }
 
@@ -274,22 +274,22 @@ static void data_from_user()
 	size_t account;
 	size_t age;
 
-	printf("Provide Name: ");
+	printf(BOLD YELLOW"Provide Name: "RESET);
 	scanf("%s" , name);
 
-	printf("Provide Password: ");
+	printf(BOLD YELLOW"Provide Password: "RESET);
 	scanf("%s" , password);
 
-	printf("Provide Age: ");
+	printf(BOLD YELLOW"Provide Age: "RESET);
 	scanf("%zu" , &age);
 
-	printf("Provide Balance: ");
+	printf(BOLD YELLOW"Provide Balance: "RESET);
 	scanf("%zu" , &balance);
 
-	printf("Provide account number: ");
+	printf(BOLD YELLOW"Provide account number: "RESET);
 	scanf("%zu" , &account);
 
-	printf("Provide Gender: ");
+	printf(BOLD YELLOW"Provide Gender: "RESET);
 	scanf("%s" , gender);
 
 	Person new_account = {
@@ -302,7 +302,7 @@ static void data_from_user()
 	};
 
 	printf("\n");
-	printf("Creating Account.... \n");
+	printf(BOLD YELLOW"Creating Account.... \n"RESET);
 
 	bool new_account_validity = create_account(&new_account);
 	if (!new_account_validity)
@@ -314,7 +314,7 @@ static void data_from_user()
 	fprintf(data , "%s,%s,%zu,%zu,%zu,%s\n", name , password, age , balance , account , gender);
 
 	printf("\n");
-	printf("Account Created Successfully\n");
+	printf(BOLD GREEN"Account Created Successfully\n"RESET);
 
 	free(gender);
 	free(password);
@@ -360,7 +360,7 @@ static void transfer_funds()
 	scanf(" %s", to);
 
 	size_t value;
-	printf("amount to transfer: ");
+	printf(BOLD YELLOW"Amount to transfer: "RESET);
 	scanf(" %zu", &value);
 
 	bool transferred = transfer_money(from , to , value);
@@ -369,40 +369,28 @@ static void transfer_funds()
 		return exit(EXIT_FAILURE);
 	}
 
-	printf("Funds Transfered to %s successfully\n", to);
+	printf("\n");
+	printf("******");
+	printf(BOLD GREEN"Funds Transfered to %s successfully\n" RESET, to);
+	printf("******");
+	printf("\n");
 
 	free(from);
 	free(to);
 }
 
 
-static void check_account_balance()
+static void check_account_balance(char *name)
 {
-	char *name= malloc(sizeof(char) * (LENGTH + 1));
-	if (name == NULL)
-	{
-		return exit(EXIT_FAILURE);
-	}
-	printf("Enter Name: ");
-	scanf(" %s", name);
-
 	size_t check = check_balance(name);
-	printf("Your Account Balance is $%.2f\n", (float) check);
+	printf(BOLD YELLOW"Your Account Balance is $%.2f\n" RESET, (float) check);
 
 	free(name);
 }
 
 
-static void user_information()
+static void user_information(char *name)
 {
-	char * name = malloc(sizeof(char) * (LENGTH + 1));
-	if (name == NULL)
-	{
-		return exit(EXIT_FAILURE);
-	}
-	printf("Enter Your Name: ");
-	scanf(" %s", name);
-
 	Retrieve_Accounts(name);
 	free(name);
 }
@@ -411,8 +399,12 @@ static void user_information()
 static void information()
 {
 	printf("\n");
-	printf("Option A: LOGIN.\n");
-	printf("Option B: CREATE ACCOUNT.\n");
+	printf("*******");
+	printf(BOLD YELLOW"Option A: LOGIN."RESET);
+	printf("*******\n");
+	printf("*******");
+	printf(BOLD YELLOW"Option B: CREATE ACCOUNT."RESET);
+	printf("*******\n");
 	printf("\n");
 }
 
@@ -420,41 +412,39 @@ static void information()
 static void after_information()
 {
 	printf("\n");
-	printf("Option A: TRANSFER FUNDS.\n");
-	printf("Option B: Account Balance.\n");
-	printf("Option C: Account Details.\n");
+	printf("*******");
+	printf(BOLD YELLOW"Option A: TRANSFER FUNDS."RESET);
+	printf("*******\n");
+	printf("*******");
+	printf(BOLD YELLOW"Option B: Account Balance."RESET);
+	printf("*******\n");
+	printf("*******");
+	printf(BOLD YELLOW"Option C: Account Details."RESET);
+	printf("*******\n");
 	printf("\n");
 }
 
 
-static bool login_user()
+static bool login_user(char *name , char *password)
 {
-	char * name = malloc(sizeof(char) * (LENGTH + 1));
-	if (name == NULL)
-	{
-		return false;
-	}
-
-	printf("Name: ");
-	scanf(" %s", name);
-
-	char * password = malloc(sizeof(char) * (LENGTH + 1));
-	if (password == NULL)
-	{
-		return false;
-	}
-
-	printf("Password: ");
-	scanf(" %s", password);
-
 	bool login_user_data = login(name , password);
 	if (!login_user_data)
 	{
+		printf("\n");
+		printf("***********");
 		fprintf(stderr, BOLD RED "Failed to Login! Try Again.\n"RESET);
+		printf("***********\n");
+		printf("\n");
+
 		return false;
 	}
 
-	fprintf(stderr, BOLD GREEN "Successfully Logged In.\n"RESET);
+	printf("\n");
+	printf("***********");
+	printf(BOLD GREEN "Successfully Logged In."RESET);
+	printf("***********\n");
+	printf("\n");
+
 	return true;
 }
 
@@ -471,7 +461,25 @@ void choose_activity()
 	{
 		case 'A':
 		{
-			bool success = login_user();
+			char * name = malloc(sizeof(char) * (LENGTH + 1));
+			if (name == NULL)
+			{
+				exit(EXIT_FAILURE);
+			}
+
+			printf("Name: ");
+			scanf(" %s", name);
+
+			char * password = malloc(sizeof(char) * (LENGTH + 1));
+			if (password == NULL)
+			{
+				exit(EXIT_FAILURE);
+			}
+
+			printf("Password: ");
+			scanf(" %s", password);
+
+			bool success = login_user(name, password);
 			if (success)
 			{
 				after_information();
@@ -486,10 +494,10 @@ void choose_activity()
 						transfer_funds();
 						break;
 					case 'B':
-						check_account_balance();
+						check_account_balance(name);
 						break;
 					case 'C':
-						user_information();
+						user_information(name);
 						break;
 				}
 			}
