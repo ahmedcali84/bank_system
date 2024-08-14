@@ -431,9 +431,9 @@ static bool login_user(char *name , char *password)
 	if (!login_user_data)
 	{
 		printf("\n");
-		printf("***********");
-		fprintf(stderr, BOLD RED "Failed to Login! Try Again.\n"RESET);
-		printf("***********\n");
+		printf(BOLD YELLOW"***********"RESET);
+		printf(BOLD RED "Failed to Login! Try Again."RESET);
+		printf(BOLD YELLOW"***********\n"RESET);
 		printf("\n");
 
 		return false;
