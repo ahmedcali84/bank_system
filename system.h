@@ -38,16 +38,37 @@ struct Person
 
 typedef struct Person Person;
 
+// Loads Accounts from Csv to Hashtable
 void Load_Accounts(char *file_path);
+
+// Initializes the hashtable to empty Buckets
 void init();
+
+// Hash Function
 size_t hash_function(char *name , size_t length);
+
+// Creates An Account
 bool create_account(Person *new_account);
+
+// Transfer Money
 bool transfer_money(char * from , char * to , size_t value);
+
+// Checks Balance
 size_t check_balance(char *name);
+
+// Frees the Allocated Memory
 void unload_Hash_table();
+
+// Options to choose services
 void choose_activity();
+
+// Retrieves Specific user accounts for the name provided
 void Retrieve_Accounts( char *name);
+
+// Prints Accounts
 void Print_accounts();
+
+// Logins a User
 bool login(char *name, char *password);
 
 #endif //BANK_SYSTEM_H
