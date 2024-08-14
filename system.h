@@ -1,6 +1,8 @@
 #ifndef BANK_SYSTEM_H
 #define BANK_SYSTEM_H
 
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -8,10 +10,21 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
-#include <raylib.h>
+
+
+// Define escape codes for text formatting
+#define RESET   "\033[0m"
+#define BOLD    "\033[1m"
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define YELLOW  "\033[33m"
 
 #define MAX_SIZE 100 //Buckets
 #define LENGTH 45 //MAX NAME SIZE
+#define BUFFER_LENGTH 256
+#ifndef STREAM
+#define STREAM "accounts.csv"
+#endif  // STREAM
 
 struct Person 
 {
@@ -25,6 +38,7 @@ struct Person
 
 typedef struct Person Person;
 
+void Load_Accounts(char *file_path);
 void init();
 size_t hash_function(char *name , size_t length);
 bool create_account(Person *new_account);
