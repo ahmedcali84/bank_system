@@ -1,4 +1,5 @@
 accounts.csv
 main
-demo.*
+*.cast
+*.gif
 *.o
