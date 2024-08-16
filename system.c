@@ -158,15 +158,15 @@ bool transfer_money(char * from , char * to , size_t value)
 	size_t index_from = hash_function(from , (size_t) strlen(from));
 	size_t index_to   = hash_function(to , (size_t) strlen(to));
 
-	if(Bank_Accounts[index_from] == NULL || strcmp(from , Bank_Accounts[index_from]->name) != 0 )
+	if (Bank_Accounts[index_from] == NULL || strcmp(from , Bank_Accounts[index_from]->name) != 0)
 	{
-		fprintf(stderr, "(NULL) 1 from \n");
+		fprintf(stderr, "Failed to verify Sender.\n");
 		return false;
 	}
-	
-	if(Bank_Accounts[index_to] == NULL || strcmp(to , Bank_Accounts[index_to]->name) != 0 )
+
+	if (Bank_Accounts[index_to] == NULL || strcmp(to , Bank_Accounts[index_to]->name) != 0)
 	{
-		fprintf(stderr, "(NULL) 2 to \n");
+		fprintf(stderr, "Failed to verify Receiver.\n");
 		return false;
 	}
 
