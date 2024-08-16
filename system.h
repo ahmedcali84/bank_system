@@ -23,7 +23,7 @@
 #define LENGTH 45 //MAX NAME SIZE
 #define BUFFER_LENGTH 256
 #ifndef STREAM
-#define STREAM "accounts.csv"
+#define STREAM "dummy.csv"
 #endif  // STREAM
 
 struct Person 
