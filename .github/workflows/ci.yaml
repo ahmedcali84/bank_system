@@ -22,4 +22,4 @@ jobs:
       run: make
 
     - name: Run tests
-      run: echo -e "A\nJack\njack000\nC" | ./main
+      run: echo -e "A\nJack\njack@000\nC" | ./main
